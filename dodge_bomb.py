@@ -31,7 +31,6 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
-
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_cry_img = pg.image.load("ex02/fig/8.png")  # 演習3：泣いているこうかとん画像をloadする
