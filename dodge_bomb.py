@@ -3,8 +3,8 @@ import sys
 import pygame as pg
 
 
-
 WIDTH, HEIGHT = 1600, 900
+
 
 delta = {  # 練習３：押下キーと移動量の辞書
     pg.K_UP: (0, -5),  # キー：移動量／値：（横方向移動量，縦方向移動量）
@@ -12,6 +12,7 @@ delta = {  # 練習３：押下キーと移動量の辞書
     pg.K_LEFT: (-5, 0),
     pg.K_RIGHT: (+5, 0)
 }
+
 
 def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     """
@@ -25,14 +26,19 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     if rct.top < 0 or HEIGHT < rct.bottom:  # 縦方向はみ出し判定
         tate = False
     return yoko, tate
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
+
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
+    kk_cry_img = pg.image.load("ex02/fig/8.png")  # 演習3：泣いているこうかとん画像をloadする
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
-    kk_rct = kk_img.get_rect()  # 練習３：こうかとんSurfaceのRectを抽出する
-    kk_rct.center = 900, 400  # 練習３：こうかとんの初期座標
+    kk_cry_img = pg.transform.rotozoom(kk_cry_img, 0, 2.0)
+    kk_rct = kk_img.get_rect()  # 練習3：こうかとんSurfaceのRectを抽出する
+    kk_rct.center = 900, 400  # 練習3：こうかとんの初期座標
     bb_img = pg.Surface((20, 20))  # 練習1：透明のSurfaceを作る
     bb_img.set_colorkey((0, 0, 0))
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  # 練習1：赤い半径10の円を描く
@@ -49,6 +55,8 @@ def main():
                 return
             
         if kk_rct.colliderect(bb_rct):
+            screen.blit(kk_cry_img, kk_rct)  # 演習3：gameover前にこうかとん画像切り替え
+            pg.display.update()  # 演習3：画面のupdate
             print("Game Over")
             return
 
